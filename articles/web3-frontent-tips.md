@@ -1,15 +1,15 @@
 ---
-title: "Web3フロントエンドTips"
+title: "[wip] Web3フロントエンドTips"
 emoji: "👾"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [web3, react, ethereum, defi]
-published: false
+published: true
 ---
 
 この記事は昔に書いた以下の記事の和訳&アップデートになります。
 [https://dev.to/yujiym/web-30-frontend-stacks-in-2023-1i03](https://dev.to/yujiym/web-30-frontend-stacks-in-2023-1i03)
 
-1.5年くらいDiFi(EVM)のフロントエンドを書いてきて、おすすめのスタック・ライブラリについてとWeb3ならではのTipsや工夫点についてまとめています。何かおすすめがあれば教えてください！
+1.5年くらいDiFi(EVM)のフロントエンドを書いてきて、おすすめのスタック・ライブラリについてとWeb3ならではのTipsや工夫点についてまとめまして。他に何かおすすめがあったり、質問があれば教えてください！
 
 # 1. システム構成
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tgc6dcgs9rm0dukfdiwo.png)
@@ -298,9 +298,16 @@ OnChainにあるTokenの情報は限られており、OffChainのどこかにリ
 
 各dAppの各コントラクトを承認する代わりに、一度`Permit2`を承認すれば、ERC20 ContractへのApproveをコントロールできるようになります。これにより、UX（walletの毎回のapproveがなくなる！）とセキュリティ（各Dappのコントラクトに対して大量のallowanceが残っていることによる問題）を大幅に改善することが期待できます。早くデファクトになってほしい。
 
+### [Lit Protocol](https://litprotocol.com/)
+
+> Lit is distributed key management for encryption, signing, and compute.
+
+### [Mina](https://minaprotocol.com/)
+
+> Mina is building the privacy and security layer for web3 with zero knowledge proofs.
 
 ## 5. 所感
 - 1.5年前は雑なフロントエンド/ライブラリが多かったけど、ものすごい勢いでクオリティ高くなってきてる。動きも早い（2ヶ月前に書いた記事の和訳に伴う修正ですら結構あった）
 - 最近だとERC-4337によるAA実装や、ZKP関係で追えないくらいの新情報が流れてくる
 - UXをつきつめていくと、キモの台帳部分のセキュリティ以外については別の手段で代替するのが良いと思うようになった。OffChainで処理したり、Modular Blockchain (Lit Protocol, Mina Protocol, Ceramic Network)と組み合わせたり。そうなると、Web5やのnostrのやろうとしていることも筋は遠っているように思う。
-  - ようやくDeFi以外のユースケースで本格的にBlockchainを使っていくようになる可能性を感じている
+  - ようやくDeFi以外のキラーユースケースが出てきそうで楽しみ
