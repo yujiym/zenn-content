@@ -63,11 +63,8 @@ Next.jsをTurborepoでデプロイする場合、Vercelが最も簡単なので�
 #### ethereum接続 : [wagmi](https://wagmi.sh/) + [ethers.js](https://ethers.org/)
 
 
-
-`wagmi`は`ethers.js`をwrapしたReact Hooks~~です~~でした。類似ライブラリは多いですが、機能性・私はこれがベストだと思っています。-> [wagmiの他のライブラリとの比較](https://wagmi.sh/react/comparison)
-
-`wagmi`はEthereum ABIs 用の TypeScript 型を提供し、これは`zod`スキーマとも連携して動作します。これにより、dAppの型チェックがより厳密になります。-> [ABIType](https://github.com/wagmi-dev/abitype)
-
+`wagmi`は`ethers.js`をwrapしたReact Hooks~~です~~でした。類似ライブラリは多いですが、機能も多く、テストも充実しているのでおすすめです。 -> [wagmiの他のライブラリとの比較](https://wagmi.sh/react/comparison)
+また、はEthereum ABIに向けたTypeScript型を提供していて、これは`zod`スキーマとも連携して動作します。これにより、dAppsの型チェックがより厳密にできるようになります。-> [ABIType](https://github.com/wagmi-dev/abitype)
 今はethers.jsの代替としてtypescript nativeで軽量で、ヒューマンリーダブルなエラーを返す（これが一番大事）、[viem](https://github.com/wagmi-dev/viem)を作っています。次のversionでethers.js依存はなくなります。
 
 
@@ -140,11 +137,9 @@ export default function SomeComponent() {
 
 > The Graph is an indexing protocol for querying networks like Ethereum and IPFS. Anyone can build and publish open APIs, called subgraphs, making data easily accessible.
 
-Contract Callは遅く、1度に1つしか呼び出せないため、複数のコントラクトコール結果をリストアップして集計値を計算するための集計レイヤーが必要になってきます。（例：liquidity一覧をtableで取得する）
-
+Contract Callは遅く、1度に1つしか呼び出せないため、複数のコントラクトコール結果をインデックスしたり、集計値を計算するためのレイヤーが必要になってきます。（例：liquidity一覧をtableで取得する）
 集計とインデックス処理は、Contractのeventをトリガーとするsubgraphでyml形式で指定でき、その結果をthegraphのdbに保存します。
-
-クライアント側では、graphqlでデータを問い合わせることができます。`urql`は、シンプルなキャッシュ戦略を持つ軽量のgraphqlクライアントで
+クライアント側では、graphqlでデータを問い合わせることができます。`urql`は、軽量なgraphqlクライアントです。
 
 ハマりポイントとしては、
 - 同block内で実行順序が保証されないようなケースへ対応しておかないと、エラーになる
@@ -280,15 +275,15 @@ export default function useTxHandler() {
 
 ## BigNumberの取り扱いについて
 
-ERC20 には `decimals` フィールドがあり、桁を意識して扱わなければなりません。
-過去、外部ライブラリがいろいろ使われていたのですが、ethers v6から、ES2020ビルトインのBigIntが採用されました。これを使っていきましょう。 -> [Migrating from v5](https://docs.ethers.org/v6/migrating/#migrate-bigint) 
+ERC20 には `decimals` フィールドがあり桁を意識して扱わなければなりません。
+過去、外部ライブラリがいろいろ使われていたのですが、ethers.js v6から、ES2020ビルトインのBigIntが採用されました。これを使っていきましょう。 -> [Migrating from v5](https://docs.ethers.org/v6/migrating/#migrate-bigint) 
 
 
 ## [Uniswap tokenlist format](https://github.com/Uniswap/token-lists)
 
 > This package includes a JSON schema for token lists, and TypeScript utilities for working with token lists.
 
-OnChainにあるTokenの情報は限られており、OffChainのどこかにリスト形式で保持する必要があります。Uniswapが公開しているこの形式に従うと、取り扱いが便利です。
+OnChainにあるTokenの情報は限られており、OffChainのどこかにリスト形式で保持する必要があります。Uniswapが公開しているこの形式に従っておくと、取り扱いが便利です。
 
 ## 4. 気になっていること
 
@@ -310,4 +305,4 @@ OnChainにあるTokenの情報は限られており、OffChainのどこかにリ
 - 1.5年前は雑なフロントエンド/ライブラリが多かったけど、ものすごい勢いでクオリティ高くなってきてる。動きも早い（2ヶ月前に書いた記事の和訳に伴う修正ですら結構あった）
 - 最近だとERC-4337によるAA実装や、ZKP関係で追えないくらいの新情報が流れてくる
 - UXをつきつめていくと、キモの台帳部分のセキュリティ以外については別の手段で代替するのが良いと思うようになった。OffChainで処理したり、Modular Blockchain (Lit Protocol, Mina Protocol, Ceramic Network)と組み合わせたり。そうなると、Web5やのnostrのやろうとしていることも筋は遠っているように思う。
-  - ようやくDeFi以外のキラーユースケースが出てきそうで楽しみ
+  - ようやくDeFi以外のキラーユースケースが出てきそうな雰囲気で楽しみ
