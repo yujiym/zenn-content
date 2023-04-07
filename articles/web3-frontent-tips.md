@@ -1,5 +1,5 @@
 ---
-title: "[wip] Web3フロントエンドTips"
+title: "Web3フロントエンドTips"
 emoji: "👾"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [web3, react, ethereum, defi]
