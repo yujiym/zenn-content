@@ -275,8 +275,8 @@ export default function useTxHandler() {
 
 ## BigNumberの取り扱いについて
 
-ERC20には `decimals` フィールドがあり、桁を意識して扱わなければなりません。
-過去、外部ライブラリがいろいろ使われていたのですが、ethers.js v6から、ES2020ビルトインのBigIntが採用されました。（wagmiのviemもBigInt）これを使っていきましょう。 -> [Migrating from v5](https://docs.ethers.org/v6/migrating/#migrate-bigint) 
+ERC20には `decimals` フィールドがあり桁を意識して扱わなければなりません。また、基本Int型の扱える桁数を超えるため、BigNumberを扱うためのライブラリで処理する必要があり、いくつかライブラリが林立していました。（しかもサイズ意外と大きい）
+ethers.js v6から、ES2020ビルトインのBigIntが採用されました。（wagmiのviemもBigInt）これを使っていきましょう。 -> [Migrating from v5](https://docs.ethers.org/v6/migrating/#migrate-bigint) 
 
 
 ## [Uniswap tokenlist format](https://github.com/Uniswap/token-lists)
@@ -305,4 +305,4 @@ OnChainにあるTokenの情報は限られており、OffChainのどこかにリ
 - 1.5年前は雑なフロントエンド/ライブラリが多かったけど、ものすごい勢いでクオリティ高くなってきてる。動きも早い（2ヶ月前に書いた記事の和訳に伴う修正ですら結構あった）
 - 最近だとERC-4337によるAA実装や、ZKP関係で追えないくらいの新情報が流れてくる
 - UXをつきつめていくと、キモの台帳部分のセキュリティ以外については別の手段で代替するのが良いと思うようになった。OffChainで処理したり、Modular Blockchain (Lit Protocol, Mina Protocol, Ceramic Network)と組み合わせたり。そうなると、Web5やのNostrのやろうとしていることも筋は遠っているように思う。
-  - ようやくDeFi以外のキラーユースケースが出てきそうな雰囲気で楽しみ
+- ようやくDeFi以外のキラーユースケースが出てきそうな雰囲気があり楽しみ
