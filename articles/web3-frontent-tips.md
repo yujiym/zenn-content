@@ -9,7 +9,7 @@ published: true
 この記事は昔に書いた以下の記事の和訳&アップデートになります。
 [https://dev.to/yujiym/web-30-frontend-stacks-in-2023-1i03](https://dev.to/yujiym/web-30-frontend-stacks-in-2023-1i03)
 
-1.5年くらいDiFi(EVM)のフロントエンドを書いてきて、おすすめのスタック・ライブラリについてとWeb3ならではのTipsや工夫点についてまとめまして。他に何かおすすめがあったり、質問があれば教えてください！
+1.5年くらいDeFi(EVM)のフロントエンドを書いてきて、おすすめのスタック・ライブラリについてとWeb3ならではのTipsや工夫点についてまとめまして。他に何かおすすめがあったり、質問があれば教えてください！
 
 # 1. システム構成
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tgc6dcgs9rm0dukfdiwo.png)
