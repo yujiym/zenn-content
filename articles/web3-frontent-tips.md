@@ -55,7 +55,7 @@ published: true
 ## Frontend Framework & ホスティング : [Next.js](https://nextjs.org/) + [TypeScript](https://www.typescriptlang.org/) + [Vercel](https://vercel.com/)
 
 Web3向けのライブラリが充実しているので、Reactが無難な選択肢です。
-Next.jsをTurborepoでデプロイする場合、Vercelが最も簡単なのですが、Vercelの便利な機能（Edge関数、ISR...）を使ってしまうと、ロックされてしまい、後々IPFSにデプロイしてdAppを完全分散化する場合に移行が難しくなってしまいます。
+Next.jsをTurborepoでデプロイする場合、Vercelが最も簡単なのですが、Vercelの便利な機能（Edge関数、ISR...）を使ってしまうと、ベンダーロックされてしまい、後々IPFSにデプロイしてdAppを完全分散化するケースで移行が難しくなってしまいます。
 [Vite](https://vitejs.dev/)や[esbuild](https://esbuild.github.io/)も小規模なアプリケーションやツールには適していると思います。
 最近はServerless frameworkを使ってもっと小さな構成でアプリを作れないか考えています。
 
@@ -194,8 +194,8 @@ Radix UIは[Headless UI](https://headlessui.com/)よりも機能が豊富です�
 
 ## State管理 : [jotai](https://jotai.org/)
 
-`jotai`は、シンプルで軽量な状態管理ライブラリです。`useState` + `ContextAPI` のようなシンプルな構成で、余計な再描画を防ぎ、多くのユーティリティを備えています。
-類似のライブラリとして、[recoil](https://recoiljs.org/), [zustand](https://zustand-demo.pmnd.rs/), [valtio](https://valtio.pmnd.rs/)があるので、好きなものを選ぶのが良いと思います。
+`jotai`は、シンプルで軽量な状態管理ライブラリです。`useState` + `ContextAPI` のようなシンプルな構成ですが、余計な再レンダリングを防いでくれたり、多くのユーティリティがあります。
+類似ライブラリとして、[recoil](https://recoiljs.org/), [zustand](https://zustand-demo.pmnd.rs/), [valtio](https://valtio.pmnd.rs/)があるので、好きなものを選ぶのが良いと思います。
 
 
 ```ts
@@ -232,9 +232,9 @@ setSession({ chainId: res.chainId, account: res.address })
 #### トランザクションを非同期で処理する
 
 BlockChainのレスポンス（特にMainnet）は、Web2のそれのレスポンスよりかなり遅いです。
-ユーザーがトランザクションを送信した後、ディスプレイの読み込みやトランザクションのステータスの表示など、ユーザへの適切なフィードバックが必要です。
+ユーザーがトランザクションを送信した後、ローディング表示やトランザクションのステータスの表示などのハンドリングが必要です。
 
-ユーザーのトランザクションが確認されたにもかかわらず、thegraphからのデータ更新が遅れ、ユーザーの操作がブラウザに反映されない場合が発生します。このケースは、最初のレンダリングにはthegraphのデータを使用し、後でcontract callの結果でその値を上書きするようにします。
+ユーザーのトランザクションがCondirmされたにもかかわらず、thegraphのデータ更新が遅れるため、ユーザーの操作がブラウザに反映されないケースが発生します。このケースは、最初のレンダリングにはthegraphのデータを使用し、後でcontract callの結果でその値を上書きするようにして対応しています。
 
 また、トランザクションがconfirmする前にユーザーがページやサイトを離れてしまった場合に対応するため、ユーザーの未完了のトランザクションは一旦`localStorage`で永続化して、確定するまで保持するようにしています。
 
@@ -275,8 +275,8 @@ export default function useTxHandler() {
 
 ## BigNumberの取り扱いについて
 
-ERC20 には `decimals` フィールドがあり桁を意識して扱わなければなりません。
-過去、外部ライブラリがいろいろ使われていたのですが、ethers.js v6から、ES2020ビルトインのBigIntが採用されました。これを使っていきましょう。 -> [Migrating from v5](https://docs.ethers.org/v6/migrating/#migrate-bigint) 
+ERC20には `decimals` フィールドがあり、桁を意識して扱わなければなりません。
+過去、外部ライブラリがいろいろ使われていたのですが、ethers.js v6から、ES2020ビルトインのBigIntが採用されました。（wagmiのviemもBigInt）これを使っていきましょう。 -> [Migrating from v5](https://docs.ethers.org/v6/migrating/#migrate-bigint) 
 
 
 ## [Uniswap tokenlist format](https://github.com/Uniswap/token-lists)
@@ -291,7 +291,7 @@ OnChainにあるTokenの情報は限られており、OffChainのどこかにリ
 
 > Permit2 introduces a low-overhead, next generation token approval/meta-tx system to make token approvals easier, more secure, and more consistent across applications.
 
-各dAppの各コントラクトを承認する代わりに、一度`Permit2`を承認すれば、ERC20 ContractへのApproveをコントロールできるようになります。これにより、UX（walletの毎回のapproveがなくなる！）とセキュリティ（各Dappのコントラクトに対して大量のallowanceが残っていることによる問題）を大幅に改善することが期待できます。早くデファクトになってほしい。
+各dAppの各コントラクトを承認する代わりに、一度`Permit2`を承認すれば、ERC20 ContractへのApproveをコントロールできるようになります。これにより、UX（walletの毎回のapproveがなくなる！）とセキュリティ（各Dappのコントラクトに対して大量のallowanceが残っていることによる問題）を改善することが期待できます。早くデファクトになってほしい。
 
 ### [Lit Protocol](https://litprotocol.com/)
 
@@ -304,5 +304,5 @@ OnChainにあるTokenの情報は限られており、OffChainのどこかにリ
 ## 5. 所感
 - 1.5年前は雑なフロントエンド/ライブラリが多かったけど、ものすごい勢いでクオリティ高くなってきてる。動きも早い（2ヶ月前に書いた記事の和訳に伴う修正ですら結構あった）
 - 最近だとERC-4337によるAA実装や、ZKP関係で追えないくらいの新情報が流れてくる
-- UXをつきつめていくと、キモの台帳部分のセキュリティ以外については別の手段で代替するのが良いと思うようになった。OffChainで処理したり、Modular Blockchain (Lit Protocol, Mina Protocol, Ceramic Network)と組み合わせたり。そうなると、Web5やのnostrのやろうとしていることも筋は遠っているように思う。
+- UXをつきつめていくと、キモの台帳部分のセキュリティ以外については別の手段で代替するのが良いと思うようになった。OffChainで処理したり、Modular Blockchain (Lit Protocol, Mina Protocol, Ceramic Network)と組み合わせたり。そうなると、Web5やのNostrのやろうとしていることも筋は遠っているように思う。
   - ようやくDeFi以外のキラーユースケースが出てきそうな雰囲気で楽しみ
