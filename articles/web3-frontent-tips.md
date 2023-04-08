@@ -143,7 +143,7 @@ Contract Callは遅く、1度に1つしか呼び出せないため、複数の�
 
 ハマりポイントとしては、
 - 同block内で実行順序が保証されないようなケースへ対応しておかないと、エラーになる
-- localhost環境で開発・debugするには、Archive Nodeが必要（過去時点の状態に対してcontracl callかけるため）、HarfHatで環境をつくるのは辛いのでMock等をかかなければいけない
+- localhost環境で開発・debugするには、Archive Nodeが必要（過去時点のstateに対してcontracl callを実行するため）、HardHat環境ではMock等をかかなければいけない
 
 ※[subsquid](https://subsquid.io/)が最近EVM Chainのサポートを追加したので、次はこれを試してみたいと思っています。
 
